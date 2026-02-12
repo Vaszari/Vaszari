@@ -1,0 +1,576 @@
+
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vaszari Szabolcs | Portfólió</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #09090b;
+      --card-bg: rgba(24, 24, 27, 0.6);
+      --border-color: rgba(255, 255, 255, 0.08);
+      
+      /* Színpaletta */
+      --primary: #38bdf8;       /* Kék (Tech) */
+      --secondary: #818cf8;     /* Lila (Soft) */
+      --accent: #22d3ee;        /* Cián (Glow) */
+      --gold: #fbbf24;          /* Arany (CV) */
+      --text-main: #f4f4f5;
+      --text-muted: #a1a1aa;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* --- ÉLŐ HÁTTÉR ANIMÁCIÓ --- */
+    .background-blobs {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.4;
+      animation: float 20s infinite alternate;
+    }
+
+    .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--secondary); animation-delay: 0s; }
+    .blob-2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: var(--primary); animation-delay: -5s; }
+    .blob-3 { top: 40%; left: 40%; width: 40vw; height: 40vw; background: rgba(56, 189, 248, 0.2); animation-delay: -10s; }
+
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(30px, 50px) scale(1.1); }
+    }
+
+    /* --- HEADER --- */
+    header {
+      padding: 6rem 2rem 4rem;
+      text-align: center;
+      position: relative;
+    }
+
+    header h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      margin: 0;
+      line-height: 1.1;
+      font-weight: 700;
+      background: linear-gradient(to right, #fff, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -2px;
+    }
+
+    header .subtitle {
+      font-size: 1.2rem;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      display: block;
+    }
+
+    header p {
+      max-width: 600px;
+      margin: 1.5rem auto 0;
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* --- LAYOUT --- */
+    main {
+      padding: 0 2rem 6rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem;
+      color: var(--text-main);
+      margin: 4rem 0 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .section-title::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, var(--border-color), transparent);
+    }
+
+    /* MÓDOSÍTOTT GRID BEÁLLÍTÁS: Kisebb min-width, hogy többen férjenek el egymás mellett */
+    .grid {
+      display: grid;
+      /* 280px-re csökkentve, így 4 kártya is elférhet egy sorban nagyobb képernyőn */
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+      gap: 2rem;
+    }
+
+    /* --- KÁRTYA DESIGN --- */
+    .card {
+      position: relative;
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 2.5rem;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      min-height: 280px;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(56, 189, 248, 0.3);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7),
+                  0 0 20px -5px rgba(56, 189, 248, 0.15);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 1.5rem;
+    }
+
+    .tag {
+      font-size: 0.75rem;
+      padding: 6px 12px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+
+    .icon-box {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: #fff;
+    }
+
+    .card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.75rem;
+      margin: 0 0 0.8rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .card p {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0;
+      flex-grow: 1;
+    }
+
+    .card-footer {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .view-text {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #fff;
+    }
+
+    .arrow-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #fff;
+      color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover .arrow-btn {
+      transform: rotate(-45deg);
+    }
+
+    /* --- CV KÁRTYA --- */
+    .cv-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .cv-card {
+      width: 100%;
+      max-width: 800px;
+      background: linear-gradient(145deg, rgba(20, 20, 20, 0.9), rgba(30, 30, 30, 0.8));
+      border: 1px solid rgba(251, 191, 36, 0.3);
+      min-height: auto;
+      flex-direction: row;
+      align-items: center;
+      padding: 3rem;
+    }
+    
+    .cv-card .tag {
+      color: var(--gold);
+      border-color: rgba(251, 191, 36, 0.3);
+      background: rgba(251, 191, 36, 0.05);
+    }
+
+    .cv-card h3 {
+      background: linear-gradient(to right, #fbbf24, #d97706);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .cv-card:hover {
+      border-color: var(--gold);
+      box-shadow: 0 0 30px rgba(251, 191, 36, 0.15);
+    }
+
+    .cv-card .arrow-btn {
+      background: var(--gold);
+      color: #000;
+    }
+
+    .cv-card::after {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+      transform: skewX(-25deg);
+      transition: 0.5s;
+    }
+
+    .cv-card:hover::after {
+      left: 150%;
+      transition: 0.7s ease-in-out;
+    }
+
+    /* --- MODAL (PDF MEGJELENÍTŐ) --- */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.85); /* Sötét háttér */
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 2000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal-content {
+      width: 90%;
+      height: 90%;
+      max-width: 1200px;
+      background: #111;
+      border-radius: 16px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: scaleIn 0.3s ease forwards;
+    }
+
+    @keyframes scaleIn {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-header {
+      padding: 1rem 1.5rem;
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-family: 'Space Grotesk', sans-serif;
+      color: #fff;
+      font-size: 1.1rem;
+    }
+
+    .close-btn {
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: #fff;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      transition: all 0.2s;
+    }
+
+    .close-btn:hover {
+      background: var(--primary);
+      color: #000;
+      transform: rotate(90deg);
+    }
+
+    .pdf-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #fff;
+    }
+
+    @media (max-width: 768px) {
+      .cv-card { flex-direction: column; text-align: left; align-items: flex-start; }
+      .cv-card .card-footer { width: 100%; }
+      header h1 { font-size: 3rem; }
+      .modal-content { width: 95%; height: 85%; }
+    }
+
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      padding: 2rem;
+      border-top: 1px solid var(--border-color);
+    }
+    footer span { color: #fff; font-weight: 600; }
+  </style>
+</head>
+<body>
+
+  <div class="background-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <div id="pdfModal" class="modal-overlay" onclick="closePdf(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <span id="modalTitle" class="modal-title">Dokumentum Megtekintése</span>
+        <button class="close-btn" onclick="closePdf(null)">✕</button>
+      </div>
+      <iframe id="pdfFrame" class="pdf-frame" src=""></iframe>
+    </div>
+  </div>
+
+  <header>
+    <span class="subtitle">Ipari Informatikai Technikus</span>
+    <h1>Vaszari Szabolcs</h1>
+    <p>Tekintse meg szakmai munkáim gyűjteményét.</p>
+  </header>
+
+  <main>
+    
+    <div class="section-title">13. Évfolyam</div>
+    
+    <div class="cv-wrapper">
+      <div class="card cv-card" onclick="openPdf('cv.pdf', 'CV')">
+        <div style="flex: 1;">
+          <div class="card-top">
+            <span class="tag">CV</span>
+          </div>
+          <h3>Önéletrajz</h3>
+          <p>Szakmai önéletrajz, kompetenciák.</p>
+        </div>
+        <div class="card-footer" style="border: none; margin: 0; padding-left: 2rem;">
+          <div class="arrow-btn">➜</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card" onclick="openPdf('programfejlesztes.pdf', 'Programfejlesztés')">
+        <div class="card-top"><span class="tag">Szoftver</span><div class="icon-box">☕</div></div>
+        <h3>Programfejlesztés</h3>
+        <p>Appfejlesztés, adatbázissal összekapcsolás.</p>
+        <div class="card-footer"><span class="view-text">Megtekintés</span><div class="arrow-btn">➜</div></div>
+      </div>
+
+      <div class="card" onclick="openPdf('iot.pdf', 'IoT Rendszerek')">
+        <div class="card-top">
+          <span class="tag">Hálózatok</span>
+          <div class="icon-box">📡</div>
+        </div>
+        <h3>IoT</h3>
+        <p>Okos eszközök hálózata, szenzoradatok gyűjtése.</p>
+        <div class="card-footer">
+          <span class="view-text">Megtekintés</span>
+          <div class="arrow-btn">➜</div>
+        </div>
+      </div>
+
+      <div class="card" onclick="openPdf('robottechnika.pdf', 'Robottechnika')">
+        <div class="card-top">
+          <span class="tag">Automatizálás</span>
+          <div class="icon-box">🤖</div>
+        </div>
+        <h3>Robottechnika</h3>
+        <p>CAD/CAM tervezés.</p>
+        <div class="card-footer">
+          <span class="view-text">Megtekintés</span>
+          <div class="arrow-btn">➜</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title">12. Évfolyam</div>
+    <div class="grid">
+      
+      <div class="card" onclick="openPdf('plc.pdf', 'PLC Programozás')">
+        <div class="card-top"><span class="tag">Automatizálás</span><div class="icon-box">🏭</div></div>
+        <h3>PLC Programozás</h3>
+        <p>Ipari vezérléstechnika, létradiagramos (LAD) programozás.</p>
+        <div class="card-footer"><span class="view-text">Megtekintés</span><div class="arrow-btn">➜</div></div>
+      </div>
+
+      <div class="card" onclick="openPdf('szimulacio.pdf', 'Számítógépes Szimuláció')">
+        <div class="card-top"><span class="tag">Modellezés</span><div class="icon-box">🎲</div></div>
+        <h3>Számítógépes Szimuláció</h3>
+        <p>CAD/CAM rendszerek, virtuális gyártás, folyamatszimulációk.</p>
+        <div class="card-footer"><span class="view-text">Megtekintés</span><div class="arrow-btn">➜</div></div>
+      </div>
+
+      <div class="card" onclick="openPdf('mikrokontroller.pdf', 'Mikrokontrollerek')">
+        <div class="card-top"><span class="tag">Rendszerek</span><div class="icon-box">📟</div></div>
+        <h3>Mikrokontrollerek</h3>
+        <p>Beágyazott rendszerek (Arduino, ESP32) programozása.</p>
+        <div class="card-footer"><span class="view-text">Megtekintés</span><div class="arrow-btn">➜</div></div>
+      </div>
+
+      <div class="card" onclick="openPdf('adatbazis.pdf', 'Adatbázis Kezelés')">
+        <div class="card-top"><span class="tag">Backend</span><div class="icon-box">🗄️</div></div>
+        <h3>Adatbázis Kezelés</h3>
+        <p>Relációs adatbázisok tervezése, SQL lekérdezések.</p>
+        <div class="card-footer"><span class="view-text">Megtekintés</span><div class="arrow-btn">➜</div></div>
+      </div>
+
+    </div>
+
+    <div class="section-title">11. Évfolyam</div>
+    <div class="grid">
+      
+      <div class="card" onclick="openPdf('halozat.pdf', 'Hálózatkezelés')">
+        <div class="card-top"><span class="tag">HÁLÓZATOK</span><div class="icon-box">🌐</div></div>
+        <h3>Hálózatkezelés</h3>
+        <p>OSI modell, Router/Switch konfigurálás (Cisco).</p>
+        <div class="card-footer"><span class="view-text">Megtekintés</span><div class="arrow-btn">➜</div></div>
+      </div>
+
+      <div class="card" onclick="openPdf('digitalis_aramkorok.pdf', 'Digitális Áramkörök')">
+        <div class="card-top">
+          <span class="tag">Hardver</span>
+          <div class="icon-box">⚡</div>
+        </div>
+        <h3>Digitális Áramkörök</h3>
+        <p>Logikai kapuk tervezése, Karnaugh-tábla.</p>
+        <div class="card-footer">
+          <span class="view-text">Megtekintés</span>
+          <div class="arrow-btn">➜</div>
+        </div>
+      </div>
+
+      <div class="card" onclick="openPdf('meresi_jkv.pdf', 'Mérési Jegyzőkönyv')">
+        <div class="card-top"><span class="tag">Labor</span><div class="icon-box">📐</div></div>
+        <h3>Mérési Jegyzőkönyv</h3>
+        <p>Laboratóriumi mérések szabványos dokumentációja.</p>
+        <div class="card-footer"><span class="view-text">Megtekintés</span><div class="arrow-btn">➜</div></div>
+      </div>
+
+      <div class="card" onclick="openPdf('prog_alapok.pdf', 'Programozás Alapjai.')">
+        <div class="card-top">
+          <span class="tag">Szoftver</span>
+          <div class="icon-box">💻</div>
+        </div>
+        <h3>Programozás Alapjai</h3>
+        <p>Algoritmuselmélet, strukturált kódolás C/C++ nyelven.</p>
+        <div class="card-footer">
+          <span class="view-text">Megtekintés</span>
+          <div class="arrow-btn">➜</div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 <span>Vaszari Szabolcs</span> — Portfolio</p>
+  </footer>
+
+  <script>
+    const modal = document.getElementById('pdfModal');
+    const iframe = document.getElementById('pdfFrame');
+    const titleSpan = document.getElementById('modalTitle');
+
+    function openPdf(filename, title) {
+      iframe.src = filename;
+      titleSpan.textContent = title || 'Dokumentum';
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden'; 
+    }
+
+    function closePdf(event) {
+      modal.classList.remove('active');
+      document.body.style.overflow = 'auto'; 
+      setTimeout(() => {
+        iframe.src = '';
+      }, 300);
+    }
+  </script>
+
+</body>
+</html>
